@@ -1,0 +1,45 @@
+---
+import SpanishIcon from "./icons/Spanish.astro";
+import JapaneseIcon from "./icons/Japanese.astro";
+import EnglishIcon from "./icons/English.astro";
+
+const TECHNOLOGIES = [
+    {
+        name: "Español - Nativo",
+        icon: SpanishIcon,
+        colorClasses: "bg-red-600 dark:bg-red-900",
+        textColor: "white"
+    },
+    {
+        name: "Inglés - B2",
+        icon: EnglishIcon,
+        colorClasses: "bg-blue-600 dark:bg-blue-900",
+        textColor: "white",
+        cert: "/certs/Cambridge_English_Certificate_Nicola_Carambia_Corbella.pdf",
+    },
+    {
+        name: "Japonés - JLPT N5",
+        icon: JapaneseIcon,
+        colorClasses: "bg-slate-100 dark:bg-white",
+        textColor: "black",
+        cert: "/certs/JLPT-N5.pdf"
+    },
+
+];
+---
+
+<div class="justify-center grid md:grid-cols-3 gap-4">
+    {
+        TECHNOLOGIES.map((technology) => (
+                <a
+                        href={technology.cert && technology.cert}
+                        class={`flex flex-col items-center justify-center p-4 transition-all duration-300 ${technology.colorClasses} hover:scale-110 rounded-lg shadow-md`}
+                >
+                    <technology.icon className="size-12"/>
+                    <span class={`mt-2 text-sm text-center font-semibold text-${technology.textColor}`}>
+          {technology.name}
+        </span>
+                </a>
+        ))
+    }
+</div>

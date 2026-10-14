@@ -4,6 +4,8 @@ import Layout from "@/layouts/Layout.astro"
 import AboutMe from "@/components/AboutMe.astro"
 import Briefcase from "@/components/icons/Briefcase.astro"
 import CodeIcon from "@/components/icons/Code.astro"
+import BulbIcon from "@/components/icons/Bulb.astro"
+import LanguagesIcon from "@/components/icons/Language.astro"
 import Experience from "@/components/Experience.astro"
 import ProfileCheck from "@/components/icons/ProfileCheck.astro"
 import Projects from "@/components/Projects.astro"
@@ -11,16 +13,17 @@ import SectionContainer from "@/components/SectionContainer.astro"
 import Hero from "@/components/Hero.astro"
 import Technologies from "@/components/Technologies.astro"
 import TitleSection from "@/components/TitleSection.astro"
+import SolidaryProjects from "../components/SolidaryProjects.astro";
+import Languages from "../components/Languages.astro";
 ---
 
 <Layout
-  title="Porfolio de midudev - Desarrollador y Programador Web con 15 años de experiencia"
-  description="Contrata a midudev para crear tu aplicación web o móvil. Desarrollador Web y Creador de Contenido. Especializado en crear aplicaciones únicas."
+  title="Porfolio de Nicola Carambia - Ingeniero Informático y Desarrollador de Software"
+  description="Contrata a Nicola para crear tu aplicación web o móvil. Desarrollador Web y de software. Especializado en crear aplicaciones web."
 >
   <main class="px-4">
     <SectionContainer class="py-16 md:py-36">
       <Hero>
-      </slot>
     </Hero>
     </SectionContainer>
     <div class="space-y-24">
@@ -40,6 +43,14 @@ import TitleSection from "@/components/TitleSection.astro"
       <Projects />
     </SectionContainer>
 
+      <SectionContainer id="accioncomoservicio">
+        <TitleSection>
+          <BulbIcon class="size-7" />
+          Acción como servicio
+        </TitleSection>
+        <SolidaryProjects />
+      </SectionContainer>
+
     <SectionContainer id="Tecnologias">
       <h2
         class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-white"
@@ -49,6 +60,16 @@ import TitleSection from "@/components/TitleSection.astro"
       </h2>
       <Technologies />
     </SectionContainer>
+
+      <SectionContainer id="idiomas">
+        <h2
+            class="flex items-center mb-6 text-3xl font-semibold gap-x-3 text-black/80 dark:text-white"
+        >
+          <LanguagesIcon class="size-7" />
+          Idiomas
+        </h2>
+        <Languages />
+      </SectionContainer>
 
     <SectionContainer id="sobre-mi">
       <TitleSection>

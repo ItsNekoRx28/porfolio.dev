@@ -4,58 +4,102 @@ import NextJSIcon from "./icons/NextJS.astro";
 import HTMLIcon from "./icons/HTML.astro";
 import CSSIcon from "./icons/CSS.astro";
 import JavaScriptIcon from "./icons/JavaScript.astro";
+import ElixirIcon from "./icons/Elixir.astro";
+import PhoenixIcon from "./icons/Phoenix.astro";
+import JavaIcon from "./icons/Java.astro";
+import SpringBootIcon from "./icons/SpringBoot.astro";
+import CiscoIcon from "./icons/Cisco.astro";
 
 enum TechnologyType {
-  Frontend = 1,
-  Backend = 2,
-  Database = 3,
-  Other = 4,
+    Frontend = 1,
+    Backend = 2,
+    Database = 3,
+    Other = 4,
 }
 const TECHNOLOGIES = [
-  {
-    name: 'JavaScript',
-    icon: JavaScriptIcon,
-    colorClasses: 'bg-yellow-500 dark:bg-yellow-300/40',
-    type: TechnologyType.Frontend
-  },
-  {
-    name: 'HTML',
-    icon: HTMLIcon,
-    colorClasses: 'bg-orange-600 dark:bg-orange-500/40',
-    type: TechnologyType.Frontend
-  },
-  {
-    name: 'CSS',
-    icon: CSSIcon,
-    colorClasses: 'bg-blue-500 dark:bg-blue-300/40',
-    type: TechnologyType.Frontend
-  },
-  {
-    name: "Tailwind",
-    icon: TailwindIcon,
-    colorClasses: "bg-blue-500 dark:bg-blue-500/40",
-    type: TechnologyType.Frontend,
-  },
-  {
-    name: "NextJS",
-    icon: NextJSIcon,
-    colorClasses: "bg-black dark:border-slate-600/20 border-2",
-    type: TechnologyType.Frontend,
-  },
+    {
+        name: "Elixir",
+        icon: ElixirIcon,
+        colorClasses: "bg-purple-600 dark:bg-purple-900",
+        type: TechnologyType.Backend,
+        textColor: "white"
+    },
+    {
+        name: "Phoenix",
+        icon: PhoenixIcon,
+        colorClasses: "bg-orange-700 dark:bg-orange-900",
+        type: TechnologyType.Frontend,
+        textColor: "white"
+    },
+    {
+        name: "Java",
+        icon: JavaIcon,
+        colorClasses: "bg-slate-100 dark:bg-white",
+        type: TechnologyType.Backend,
+        textColor: "black"
+    },
+    {
+        name: "SpringBoot",
+        icon: SpringBootIcon,
+        colorClasses: "bg-lime-900",
+        type: TechnologyType.Frontend,
+        textColor: "white"
+    },
+    /*{
+        name: "NextJS",
+        icon: NextJSIcon,
+        colorClasses: "bg-black dark:border-slate-600/20 border-2",
+        type: TechnologyType.Frontend,
+        textColor: "white"
+    },*/
+    {
+        name: 'JavaScript',
+        icon: JavaScriptIcon,
+        colorClasses: 'bg-yellow-500 dark:bg-yellow-300/40',
+        type: TechnologyType.Frontend,
+        textColor: "white"
+    },
+    {
+        name: 'HTML',
+        icon: HTMLIcon,
+        colorClasses: 'bg-orange-600 dark:bg-orange-500/40',
+        type: TechnologyType.Frontend,
+        textColor: "white"
+    },
+    {
+        name: 'CSS',
+        icon: CSSIcon,
+        colorClasses: 'bg-blue-500 dark:bg-blue-300/40',
+        type: TechnologyType.Frontend,
+        textColor: "white"
+    },
+    {
+        name: "Tailwind",
+        icon: TailwindIcon,
+        colorClasses: "bg-blue-500 dark:bg-blue-500/40",
+        type: TechnologyType.Frontend,
+        textColor: "white"
+    },
+    {
+        name: "Cisco CCNA 1 - 2 - 3",
+        icon: CiscoIcon,
+        colorClasses: "bg-blue-500 dark:bg-blue-500/40",
+        type: TechnologyType.Frontend,
+        textColor: "white"
+    },
+
 ];
 ---
 
 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-  {
-    TECHNOLOGIES.map((technology) => (
-      <div
-        class={`flex flex-col items-center justify-center p-4 transition-all duration-300 ${technology.colorClasses} hover:scale-110 rounded-lg shadow-md`}
-      >
-        <technology.icon className="size-12" />
-        <span class="mt-2 text-sm font-semibold text-white">
-          {technology.name}
-        </span>
-      </div>
-    ))
-  }
+    {
+        TECHNOLOGIES.map((technology) => (
+                <div class={`flex flex-col items-center justify-center p-4 transition-all duration-300 ${technology.colorClasses} hover:scale-110 rounded-lg shadow-md`}>
+                    <technology.icon className="size-12"/>
+                    <span class={`mt-2 text-sm font-semibold text-${technology.textColor}`}>
+                        {technology.name}
+                    </span>
+                </div>
+        ))
+    }
 </div>
