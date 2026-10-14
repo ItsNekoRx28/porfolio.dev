@@ -1,189 +1,107 @@
 ---
 import GitHub from "./icons/GitHub.astro"
-import NextJS from "./icons/NextJS.astro"
 import Tailwind from "./icons/Tailwind.astro"
 import Link from "./icons/Link.astro"
 import LinkButton from "./LinkButton.astro"
-import Html from "./icons/HTML.astro";
-import Css from "./icons/CSS.astro";
-import Javascript from "./icons/JavaScript.astro";
-import Elixir from "./icons/Elixir.astro";
-import Phoenix from "./icons/Phoenix.astro";
-import Java from "./icons/Java.astro";
-import Springboot from "./icons/SpringBoot.astro";
-import Doc from "./icons/Doc.astro";
-import Play from "./icons/Play.astro";
-import Unity from "./icons/Unity.astro";
+import Html from "./icons/HTML.astro"
+import Css from "./icons/CSS.astro"
+import Javascript from "./icons/JavaScript.astro"
+import Elixir from "./icons/Elixir.astro"
+import Phoenix from "./icons/Phoenix.astro"
+import Java from "./icons/Java.astro"
+import Doc from "./icons/Doc.astro"
+import Play from "./icons/Play.astro"
+import Unity from "./icons/Unity.astro"
+import Docker from "./icons/Docker.astro"
+import Linux from "./icons/Linux.astro"
+import TrueNAS from "./icons/TrueNAS.astro"
+import Tailscale from "./icons/Tailscale.astro"
+import PostgreSQL from "./icons/PostgreSQL.astro"
+import type { Project, TagKey } from "@/i18n/content"
 
-const TAGS = {
-    NEXT: {
-        name: "Next.js",
-        class: "bg-black text-white",
-        icon: NextJS,
-    },
-    TAILWIND: {
-        name: "Tailwind CSS",
-        class: "bg-[#003159] text-white",
-        icon: Tailwind,
-    },
-    ELIXIR: {
-        name: "Elixir",
-        class: "bg-purple-900 text-white",
-        icon: Elixir,
-    },
-    PHOENIX: {
-        name: "Phoenix",
-        class: "bg-orange-900 text-white",
-        icon: Phoenix,
-    },
-    JAVA: {
-        name: "Java",
-        class: "bg-white text-black",
-        icon: Java,
-    },
-    SPRINGBOOT: {
-        name: "SpringBoot",
-        class: "bg-lime-900 text-white",
-        icon: Springboot,
-    },
-    JS: {
-        name: "JavaScrip",
-        class: "bg-yellow-500 text-black",
-        icon: Javascript,
-    },
-    HTML: {
-        name: "HTML",
-        class: "bg-orange-600 text-white",
-        icon: Html,
-    },
-    CSS: {
-        name: "CSS",
-        class: "bg-blue-500 text-white",
-        icon: Css,
-    },
-    UNITY: {
-        name: "Unity",
-        class: "bg-black text-white",
-        icon: Unity,
-    },
+interface Props {
+  projects: Project[]
+  labels: { code: string; link: string; docs: string; play: string }
 }
-const PROJECTS = [
-    {
-        title: "DeliverIt - Corrector manual de código",
-        description:
-            "Realizado como beca y extendido como Trabajo de Fin de Grado (TFG). Consiste en un corrector manual de prácticas de programación para la plataforma web de DeliverIt de la Universidad Politécnica de Madrid.",
-        doc: "https://oa.upm.es/82497/",
-        image: "/projects/deliverit.webp",
-        tags: [TAGS.ELIXIR, TAGS.PHOENIX, TAGS.CSS, TAGS.HTML],
-        link: "",
-        github: "",
-    },
-    {
-        title: "The Flying Chicken",
-        description:
-            "Mini videojuego realizado con un equipo de 6 desarrolladores utilizando Unity",
-        image: "/projects/flying_chicken.webp",
-        tags: [TAGS.UNITY],
-        play: "https://play.unity.com/es/games/7513214a-1abb-4982-811d-d58f853a3796/the-flying-chicken-v024",
-        github: "https://github.com/ItsNekoRx28/Flying-Chicken",
-    },
-    {
-        title: "Asteroids",
-        description:
-            "Mini videojuego del popular Asteroids realizado con un equipo de 2 desarrolladores utilizando Unity",
-        image: "/projects/asteroids.webp",
-        tags: [TAGS.UNITY],
-        github: "https://github.com/ItsNekoRx28/Asteroids-UPM",
-    },
-    {
-        title: "Servidor TrueNAS",
-        description:
-            "Montaje de un servidor TrueNAS privado con sistema de backups. Utilizado principalmente para VPN y Cloud Storage. La conexión de los discos duros se realiza con el uso de controladoras SAS sin el empleo de RAID, cuyo sistema de archivos es ZFS.",
-        image: "/projects/truenas.webp",
-        tags: [],
-    },
-    {
-        title: "Wii Portátil",
-        description:
-            "Portabilización de una consola Wii con su hardware original. Para este proyecto se utilizaron tanto PCBs de la comunidad como diseños propios. Manejo de baterías (balanceadores de carga, módulos, etc...).",
-        image: "/projects/wii.webp",
-        tags: [],
-        doc: "https://www.linkedin.com/posts/nekaso_proyecto-completado-despu%C3%A9s-de-share-7307074688822710272-y28u/?skipRedirect=true",
-    },
-    {
-        title: "Máquina Arcade",
-        description:
-            "Como proyecto de instituto en el IES Gerardo Diego. Se construyó de manera completamente artesanal y desde 0, con un equipo de 5 personas, una máquina de arcade. Diseño de la estructura, cortado y montaje. La arcade cuenta con la posibilidad de utilizar monedas como medio para jugar partidas.",
-        image: "/projects/arcade.webp",
-        tags: [],
-    },
-]
+
+const { projects, labels } = Astro.props
+
+const TAGS: Record<TagKey, { name: string; class: string; icon: any }> = {
+  ELIXIR: { name: "Elixir", class: "bg-purple-900 text-white", icon: Elixir },
+  PHOENIX: { name: "Phoenix", class: "bg-orange-900 text-white", icon: Phoenix },
+  TAILWIND: { name: "Tailwind CSS", class: "bg-[#003159] text-white", icon: Tailwind },
+  JAVA: { name: "Java", class: "bg-white text-black", icon: Java },
+  JS: { name: "JavaScript", class: "bg-yellow-500 text-black", icon: Javascript },
+  HTML: { name: "HTML", class: "bg-orange-600 text-white", icon: Html },
+  CSS: { name: "CSS", class: "bg-blue-500 text-white", icon: Css },
+  UNITY: { name: "Unity", class: "bg-black text-white", icon: Unity },
+  DOCKER: { name: "Docker", class: "bg-sky-900 text-white", icon: Docker },
+  LINUX: { name: "Linux", class: "bg-gray-800 text-white", icon: Linux },
+  TRUENAS: { name: "TrueNAS SCALE", class: "bg-sky-800 text-white", icon: TrueNAS },
+  TAILSCALE: { name: "Tailscale", class: "bg-gray-900 text-white", icon: Tailscale },
+  POSTGRES: { name: "PostgreSQL", class: "bg-blue-900 text-white", icon: PostgreSQL },
+}
 ---
 
 <div class="flex flex-col gap-y-16">
-    {
-        PROJECTS.map(({image, title, description, tags, link, github, doc, play}) => (
-                <article class="flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0">
-                    <div class="w-full md:w-1/2">
-                        <div class="relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
-                            <img alt=""
-                                 class="object-cover object-top w-full h-56 transition duration-500 sm:h-full md:scale-110 md:group-hover:scale-105"
-                                 src={image}/>
-                        </div>
-                    </div>
+  {
+    projects.map(({ image, title, description, tags, link, github, doc, play }) => (
+      <article class="flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0">
+        {image && (
+          <div class="w-full md:w-1/2">
+            <div class="relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
+              <img alt={title} class="object-cover object-top w-full h-56 transition duration-500 sm:h-full md:scale-110 md:group-hover:scale-105" src={image} />
+            </div>
+          </div>
+        )}
 
-                    <div class="w-full md:w-1/2 md:max-w-lg">
-                        <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
-                            {title}
-                        </h3>
-                        <div class="flex flex-wrap mt-2">
-                            <ul class="flex flex-row mb-2 gap-x-2">
-                                {tags.map((tag) => (
-                                        <li>
-              <span
-                      class={`flex gap-x-2 rounded-full text-xs ${tag.class} py-1 px-2 `}
-              >
-                <tag.icon class="size-4"/>
-                  {tag.name}
-              </span>
-                                        </li>
-                                ))}
-                            </ul>
+        <div class="w-full md:w-1/2 md:max-w-lg">
+          <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">{title}</h3>
+          <div class="flex flex-wrap mt-2">
+            <ul class="flex flex-row flex-wrap mb-2 gap-2">
+              {tags.map((key) => {
+                const tag = TAGS[key]
+                return (
+                  <li>
+                    <span class={`flex gap-x-2 rounded-full text-xs ${tag.class} py-1 px-2`}>
+                      <tag.icon class="size-4" />
+                      {tag.name}
+                    </span>
+                  </li>
+                )
+              })}
+            </ul>
 
-                            <div class="mt-2 text-gray-700 dark:text-gray-400">{description}</div>
-                            <footer class="flex items-end justify-start mt-4 gap-x-4">
-                                {github && (
-                                        <LinkButton href={github}>
-                                            <GitHub class="size-6"/>
-                                            Código
-
-                                        </LinkButton>
-                                )}
-                                {link && (
-                                        <LinkButton href={link}>
-                                            <Link class="size-4"/>
-                                            Enlace
-                                        </LinkButton>
-                                )}
-                                {doc && (
-                                        <LinkButton href={doc}>
-                                            <Doc class="size-4"/>
-                                            Documentación
-                                        </LinkButton>
-                                )}
-                                {play && (
-                                        <LinkButton href={play}>
-                                            <Play class="size-4"/>
-                                            Jugar
-                                        </LinkButton>
-                                )}
-                            </footer>
-                        </div>
-                    </div>
-                </article>
-        ))
-    }
+            <div class="w-full mt-2 text-gray-700 dark:text-gray-400">{description}</div>
+            <footer class="flex flex-wrap items-end justify-start mt-4 gap-4">
+              {github && (
+                <LinkButton href={github}>
+                  <GitHub class="size-6" />
+                  {labels.code}
+                </LinkButton>
+              )}
+              {link && (
+                <LinkButton href={link}>
+                  <Link class="size-4" />
+                  {labels.link}
+                </LinkButton>
+              )}
+              {doc && (
+                <LinkButton href={doc}>
+                  <Doc class="size-4" />
+                  {labels.docs}
+                </LinkButton>
+              )}
+              {play && (
+                <LinkButton href={play}>
+                  <Play class="size-4" />
+                  {labels.play}
+                </LinkButton>
+              )}
+            </footer>
+          </div>
+        </div>
+      </article>
+    ))
+  }
 </div>
-
-
-

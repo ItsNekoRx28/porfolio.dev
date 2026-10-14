@@ -1,0 +1,130 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import AboutMe from "@/components/AboutMe.astro"
+import Briefcase from "@/components/icons/Briefcase.astro"
+import CodeIcon from "@/components/icons/Code.astro"
+import BulbIcon from "@/components/icons/Bulb.astro"
+import LanguagesIcon from "@/components/icons/Language.astro"
+import Experience from "@/components/Experience.astro"
+import ProfileCheck from "@/components/icons/ProfileCheck.astro"
+import Projects from "@/components/Projects.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import Hero from "@/components/Hero.astro"
+import Technologies from "@/components/Technologies.astro"
+import TitleSection from "@/components/TitleSection.astro"
+import SolidaryProjects from "@/components/SolidaryProjects.astro"
+import Languages from "@/components/Languages.astro"
+import LinkButton from "@/components/LinkButton.astro"
+import DocIcon from "@/components/icons/Doc.astro"
+import { useTranslations, type Lang } from "@/i18n/ui"
+import { content } from "@/i18n/content"
+
+interface Props {
+  lang: Lang
+}
+
+const { lang } = Astro.props
+const t = useTranslations(lang)
+const c = content[lang]
+const timelineLabels = { more: t("btn.more"), docs: t("btn.docs") }
+---
+
+<Layout lang={lang} title={t("meta.title")} description={t("meta.description")}>
+  <main class="px-4">
+    <SectionContainer class="py-16 md:py-36">
+      <Hero hero={c.hero} labels={{ contact: t("hero.contact"), cv: t("hero.cv") }} />
+    </SectionContainer>
+    <div class="space-y-24">
+      <SectionContainer id="experiencia">
+        <TitleSection>
+          <Briefcase class="size-8" />
+          {t("section.experience")}
+        </TitleSection>
+        <Experience items={c.experience} labels={timelineLabels} />
+      </SectionContainer>
+
+      <SectionContainer id="proyectos">
+        <TitleSection>
+          <CodeIcon class="size-7" />
+          {t("section.projects")}
+        </TitleSection>
+        <Projects
+          projects={c.projects}
+          labels={{ code: t("btn.code"), link: t("btn.link"), docs: t("btn.docs"), play: t("btn.play") }}
+        />
+      </SectionContainer>
+
+      <SectionContainer id="formacion">
+        <TitleSection>
+          <ProfileCheck class="size-8" />
+          {t("section.education")}
+        </TitleSection>
+        <Experience items={c.education} labels={timelineLabels} />
+        <h3 class="mt-4 mb-4 text-2xl font-semibold text-black/80 dark:text-white">{t("section.courses")}</h3>
+        <ul class="flex flex-col gap-4">
+          {
+            c.courses.map((course) => (
+              <li class="flex flex-wrap items-center justify-between gap-3 p-4 rounded-xl border border-gray-300 dark:border-gray-700 bg-white/40 dark:bg-gray-900/40">
+                <div>
+                  <p class="font-semibold text-gray-800 dark:text-gray-100">{course.name}</p>
+                  <p class="text-sm text-gray-600 dark:text-gray-400">{course.detail}</p>
+                </div>
+                {course.cert && (
+                  <LinkButton href={course.cert}>
+                    <DocIcon class="size-4" />
+                    {t("btn.cert")}
+                  </LinkButton>
+                )}
+                {course.certificates && (
+                  <div class="ml-auto flex flex-wrap items-center gap-2">
+                    {course.certificates.map((certificate) => (
+                      <LinkButton
+                        href={certificate.href}
+                        compact
+                        ariaLabel={`${t("btn.cert")} CCNA ${certificate.label}`}
+                      >
+                        {certificate.label}
+                      </LinkButton>
+                    ))}
+                  </div>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </SectionContainer>
+
+      <SectionContainer id="tecnologias">
+        <TitleSection>
+          <CodeIcon class="size-7" />
+          {t("section.technologies")}
+        </TitleSection>
+        <Technologies />
+      </SectionContainer>
+
+      <SectionContainer id="idiomas">
+        <TitleSection>
+          <LanguagesIcon class="size-7" />
+          {t("section.languages")}
+        </TitleSection>
+        <Languages items={c.languages} certLabel={t("btn.cert")} />
+      </SectionContainer>
+
+      <SectionContainer id="voluntariado">
+        <TitleSection>
+          <BulbIcon class="size-7" />
+          {t("section.volunteering")}
+        </TitleSection>
+        <SolidaryProjects items={c.volunteering} labels={{ link: t("btn.link"), docs: t("btn.docs") }} />
+      </SectionContainer>
+
+      <SectionContainer id="sobre-mi">
+        <TitleSection>
+          <ProfileCheck class="size-8" />
+          {t("section.about")}
+        </TitleSection>
+        <AboutMe paragraphs={c.about} photoAlt={c.aboutPhotoAlt} />
+      </SectionContainer>
+    </div>
+  </main>
+</Layout>

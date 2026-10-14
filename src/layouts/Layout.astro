@@ -4,17 +4,21 @@ import "@fontsource-variable/onest"
 import Header from "../components/Header.astro"
 import Footer from "../components/Footer.astro"
 import { ViewTransitions } from "astro:transitions"
+import { homePath, type Lang } from "@/i18n/ui"
 
 interface Props {
   title: string
   description: string
+  lang: Lang
 }
 
-const { description, title } = Astro.props
+const { description, title, lang } = Astro.props
+const site = Astro.site ?? new URL("https://porfolio.nekaso.es/")
+const url = (l: Lang) => new URL(homePath[l], site).href
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
@@ -22,6 +26,31 @@ const { description, title } = Astro.props
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <link rel="canonical" href={url(lang)} />
+    <link rel="alternate" hreflang="es" href={url("es")} />
+    <link rel="alternate" hreflang="en" href={url("en")} />
+    <link rel="alternate" hreflang="x-default" href={url("es")} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url(lang)} />
+    <meta property="og:image" content={new URL("/nicola.webp", site).href} />
+    <meta property="og:locale" content={lang === "es" ? "es_ES" : "en_US"} />
+    <script is:inline>
+      // Primera visita a la versión en español: si el navegador no está en español,
+      // abre la versión en inglés. Si el visitante ya eligió idioma con el botón, se respeta.
+      ;(function () {
+        try {
+          var saved = localStorage.getItem("lang")
+          var path = location.pathname
+          var isEs = path === "/" || path === "/index.html"
+          var browserEs = (navigator.languages || [navigator.language || ""]).some(function (l) {
+            return String(l).toLowerCase().indexOf("es") === 0
+          })
+          if (isEs && (saved === "en" || (!saved && !browserEs))) location.replace("/en/" + location.hash)
+        } catch (e) {}
+      })()
+    </script>
     <ViewTransitions />
   </head>
 
@@ -32,9 +61,9 @@ const { description, title } = Astro.props
       dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"
     >
     </div>
-    <Header />
+    <Header lang={lang} />
     <slot />
-    <div class="py-12"/>
+    <Footer lang={lang} />
     <style is:global>
       :root {
         color-scheme: light dark;

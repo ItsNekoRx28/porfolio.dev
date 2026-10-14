@@ -1,41 +1,40 @@
 ---
-const personalImageAlt = "https://media.licdn.com/dms/image/v2/C4D03AQHtKPM5gcOSUw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1648293555421?e=1730332800&v=beta&t=xMwePgn0BLbPZ3vZyVvgacXLxu49AsflXXHWHYMDJ_o"
 import Badge from "@/components/Badge.astro"
 import LinkedInIcon from "@/components/icons/LinkedIn.astro"
 import MailIcon from "@/components/icons/Mail.astro"
 import GitHubIcon from "@/components/icons/GitHub.astro"
+import DocIcon from "@/components/icons/Doc.astro"
 import SocialPill from "@/components/SocialPill.astro"
+import type { Content } from "@/i18n/content"
+
+interface Props {
+  hero: Content["hero"]
+  labels: { contact: string; cv: string }
+}
+
+const { hero, labels } = Astro.props
+
+// El botón "Descargar CV" solo aparece si el PDF existe en public/cv/
+const cvFiles = Object.keys(import.meta.glob("/public/cv/*.pdf"))
+const cvExists = cvFiles.some((f) => f.endsWith(hero.cv))
 ---
 
 <div class="max-w-xl">
-  <div class="flex gap-4 mb-4">
-    <img
-      class="rounded-full shadow-lg size-24"
-      src="/nicola.webp"
-      alt={personalImageAlt}
-    />
-    <a
-      href="https://www.linkedin.com/in/nekaso"
-      target="_blank"
-      rel="noopener"
-      class="flex items-center transition md:justify-center md:hover:scale-105"
-    >
-      <Badge>Actualmente trabajando</Badge>
+  <div class="flex flex-col items-start gap-4 mb-4 sm:flex-row sm:items-center">
+    <img class="rounded-full shadow-lg size-24" src="/nicola.webp" alt={hero.photoAlt} />
+    <a href="https://www.linkedin.com/in/nekaso" target="_blank" rel="noopener" class="flex items-center transition md:justify-center md:hover:scale-105">
+      <Badge>{hero.badge}</Badge>
     </a>
   </div>
-  <h1
-    class="text-4xl font-bold tracking-tight text-gray-800 sm:text-5xl dark:text-white"
-  >
-    Hola, soy Nicola
-  </h1>
-  <p class="mt-6 text-xl text-gray-800 dark:[&>strong]:text-yellow-200 [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300">
-    <strong>Ingeniero Informático.</strong> <br/> Actualmente estudiando el <strong>Máster en Computer Science</strong> en <strong>Doshisha University (同志社大学)</strong>, Japón.<br/>
-    Especializado en el desarrollo de software.
-  </p>
+  <h1 class="text-4xl font-bold tracking-tight text-gray-800 sm:text-5xl dark:text-white">{hero.greeting}</h1>
+  <p
+    class="mt-6 text-xl text-gray-800 dark:[&>strong]:text-yellow-200 [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300"
+    set:html={hero.intro}
+  />
   <nav class="flex flex-wrap gap-4 mt-8">
     <SocialPill href="mailto:nicola.carambia@protonmail.com">
       <MailIcon class="size-4" />
-      Contáctame
+      {labels.contact}
     </SocialPill>
     <SocialPill href="https://www.linkedin.com/in/nekaso">
       <LinkedInIcon class="size-4" />
@@ -45,5 +44,13 @@ import SocialPill from "@/components/SocialPill.astro"
       <GitHubIcon class="size-4" />
       GitHub
     </SocialPill>
+    {
+      cvExists && (
+        <SocialPill href={hero.cv}>
+          <DocIcon class="size-4" />
+          {labels.cv}
+        </SocialPill>
+      )
+    }
   </nav>
 </div>

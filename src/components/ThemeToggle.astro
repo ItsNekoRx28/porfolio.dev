@@ -4,6 +4,7 @@ import MoonIcon from "./icons/Moon.astro"
 import SystemIcon from "./icons/System.astro"
 
 const THEMES = ["Light", "Dark", "System"]
+const { label = "Elige el tema" } = Astro.props
 ---
 
 <div class="relative ml-1 mr-1">
@@ -12,7 +13,7 @@ const THEMES = ["Light", "Dark", "System"]
     id="theme-toggle-btn"
     class="appearance-none border-none flex hover:scale-125 transition"
   >
-    <span class="sr-only">Elige el tema</span>
+    <span class="sr-only">{label}</span>
     <SunIcon id="light" class="theme-toggle-icon size-5 transition-all" />
     <MoonIcon
       id="dark"

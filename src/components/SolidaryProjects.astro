@@ -1,77 +1,46 @@
 ---
 import Link from "./icons/Link.astro"
 import LinkButton from "./LinkButton.astro"
-import Doc from "./icons/Doc.astro";
+import Doc from "./icons/Doc.astro"
+import type { Volunteer } from "@/i18n/content"
 
-const PROJECTS = [
-    {
-        title: "Reordonar",
-        description:
-            "Proyecto en el IES Gerardo Diego compuesto por 4 personas. Recogimos de material electrónico que iba a ser descartado, lo reciclamos y posteriormente lo donamos\n" +
-            "Se consiguió realizar el montaje de un Aula Informática en CEIP Perú.",
-        image: "/projects/reordonar.webp",
-        tags: [],
-        link: "https://x.com/reordonar",
-    },
-    {
-        title: "Viseras en tiempos de Covid",
-        description:
-            "Trabajamos a distancia un equipo de 5 personas. Diseñamos e imprimimos viseras en confinamiento con el objetivo de entregar 500 viseras al hospital 12 Octubre",
-        image: "/projects/viseras.webp",
-        tags: [],
-        link: "https://www.20minutos.es/noticia/4228320/0/alumnos-padres-y-profesorado-de-un-instituto-de-pozuelo-imprimen-600-viseras-y-las-donan-para-uso-sanitario/",
-    },
-    {
-        title: "De la Impresión 3D al Ahorro Total",
-        description:
-            "Proyecto de investigación compuesto por 3 personas. Realizamos una investigación para el ahorro de fungibles en centros de secundaria a la hora de realizar impresiones 3D.",
-        image: "/projects/iot3d.webp",
-        tags: [],
-        doc: "/projects/Caixa IOT DE LA IMPRESIÓN 3D AL AHORRO TOTAL.pdf",
-    },
-]
+interface Props {
+  items: Volunteer[]
+  labels: { link: string; docs: string }
+}
+
+const { items, labels } = Astro.props
 ---
 
 <div class="flex flex-col gap-y-16">
-    {
-        PROJECTS.map(({image, title, description, link, doc}) => (
-                <article class="flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0">
+  {
+    items.map(({ image, title, description, link, doc }) => (
+      <article class="flex flex-col space-x-0 space-y-8 group md:flex-row md:space-x-8 md:space-y-0">
+        <div class="w-full md:w-1/2 md:max-w-lg">
+          <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">{title}</h3>
+          <div class="mt-2 text-gray-700 dark:text-gray-400">{description}</div>
+          <footer class="flex items-end justify-start mt-4 gap-x-4">
+            {link && (
+              <LinkButton href={link}>
+                <Link class="size-4" />
+                {labels.link}
+              </LinkButton>
+            )}
+            {doc && (
+              <LinkButton href={encodeURI(doc)}>
+                <Doc class="size-4" />
+                {labels.docs}
+              </LinkButton>
+            )}
+          </footer>
+        </div>
 
-
-                    <div class="w-full md:w-1/2 md:max-w-lg">
-                        <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">
-                            {title}
-                        </h3>
-
-
-                            <div class="mt-2 text-gray-700 dark:text-gray-400">{description}</div>
-                            <footer class="flex items-end justify-start mt-4 gap-x-4">
-                                {link && (
-                                        <LinkButton href={link}>
-                                            <Link class="size-4"/>
-                                            Enlace
-                                        </LinkButton>
-                                )}
-                                {doc && (
-                                        <LinkButton href={doc}>
-                                            <Doc class="size-4"/>
-                                            Documentación
-                                        </LinkButton>
-                                )}
-                            </footer>
-                        </div>
-
-                    <div class="w-full md:w-1/2">
-                        <div class="relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
-                            <img alt=""
-                                 class="object-cover object-top w-full h-56 transition duration-500 sm:h-full md:scale-110 md:group-hover:scale-105"
-                                 src={image}/>
-                        </div>
-                    </div>
-                </article>
-        ))
-    }
+        <div class="w-full md:w-1/2">
+          <div class="relative flex flex-col items-center col-span-6 row-span-5 gap-8 transition duration-500 ease-in-out transform shadow-xl overflow-clip rounded-xl sm:rounded-xl md:group-hover:-translate-y-1 md:group-hover:shadow-2xl lg:border lg:border-gray-800 lg:hover:border-gray-700 lg:hover:bg-gray-800/50">
+            <img alt={title} class="object-cover object-top w-full h-56 transition duration-500 sm:h-full md:scale-110 md:group-hover:scale-105" src={image} />
+          </div>
+        </div>
+      </article>
+    ))
+  }
 </div>
-
-
-

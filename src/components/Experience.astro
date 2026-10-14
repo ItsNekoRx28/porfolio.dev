@@ -1,64 +1,21 @@
 ---
 import ExperienceItem from "./ExperienceItem.astro"
-const EXPERIENCE = [
-    {
-        date: "Noviembre 2024 - Actualmente",
-        title: "Freelancer Software Developer",
-        company: "Freelancer",
-        description:
-            "Desarrollo de aplicaciones web desarrolladas principalmente con Elixir y Phoenix utilizando LiveView",
-    },
-    {
-        date: "Agosto 2024 - Noviembre 2024",
-        title: "Elixir FullStack Engineer",
-        company: "Doofinder",
-        description:
-            "Desarrollo de un buscador para páginas web desarrollado con Elixir y Phoenix principalmente",
-    },
-    {
-        date: "Septiembre 2023 - Mayo 2024",
-        title: "FullStack Engineer",
-        company: "Fabrick Solutions Spain",
-        description:
-            "Implementación y diseño de una aplicación para la gestión de transacciones bancarias internacionales. " +
-            "Diseño e Implementación de sistema de sistema de comunicaciones para radares de Stop. " +
-            "Curso completo de SpringBoot. " +
-            "Uso de GitLab y Jira para el trabajo en equipo con Metodología Agile/Kanban. " +
-            "Tecnologías: PostgreSQL, Pentaho, Microsoft Power Bi, Springboot, Batch, Python.",
-    },
-    {
-        date: "Marzo 2023 - Junio 2023",
-        title: "Elixir FullStack Engineer",
-        company: "Universidad Politécnica de Madrid - DeliverIt",
-        description:
-            "Diseño de un corrector de prácticas universitarias para la Universidad Politécnica de Madrid en la plataforma web DeliverIt. " +
-            "Lenguajes: Elixir, Phoenix, JavaScript, CSS, HTML.",
-        link: "https://calidad.upm.es/proyectos-ie/informacion?anyo=2022-2023&id=877"
-    },
-    {
-        date: "Marzo 2020",
-        title: "Web Developer",
-        company: "L'Altro Mondo",
-        description:
-            "Diseño web de la pizzería más antigua de Pozuelo de Alarcón. Gestión de Hosting y DNS. Además de un mantenimiento y actualización de la web",
-        link: "https://www.laltromondo.es/"
-    },
-    {
-        date: "2018",
-        title: "4º+EMPRESA",
-        company: "Microlog",
-        description:
-            "Montaje de kits para centros educativos y Gestión de Stock",
-    },
-]
+import type { TimelineItem } from "@/i18n/content"
+
+interface Props {
+  items: TimelineItem[]
+  labels: { more: string; docs: string }
+}
+
+const { items, labels } = Astro.props
 ---
 
 <ol class="relative mt-16">
-    {
-        EXPERIENCE.map((experience) => (
-                <li class="">
-                    <ExperienceItem {...experience}/>
-                </li>
-        ))
-    }
+  {
+    items.map((item) => (
+      <li>
+        <ExperienceItem {...item} labels={labels} />
+      </li>
+    ))
+  }
 </ol>
